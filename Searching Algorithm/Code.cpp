@@ -1,51 +1,55 @@
 #include<iostream>
 using namespace std;
 
-int bin_sear(int arr[ ],int n,int terget){
-    int left = 0;
-    int right =n - 1;
-    
+tern_sear(int arr[],int n, int target){
+    int left= 0;
+    int right= n-1;
     while(left<=right){
-        int mid = (left + right)/2;
+        int mid1= left+ (right-left)/3;
+        int mid2= right - (right -left )/3;
 
-        if(arr[mid]==terget){
-           return mid;
+        if(arr[mid1]==target){
+            return mid1;
         }
-        else if(arr[mid]<terget){
-            left= mid + 1;
+        if(arr[mid2]==target){
+            return mid2;
+        }
+        else if(arr[mid1]>target){
+            right= mid1 - 1;
+        }
+        else if(arr[mid2]<target){
+            left = mid2 + 1;
         }
         else{
-            right= mid-1;
+           left = mid1+1;
+           right = mid2-1;
         }
     }
     return -1;
-
 }
 
-int main(){
-    int n, terget;
 
-    cout<<"Enter your arr size: ";
+int main(){
+    int n, target;
+
+    cout<<"Enter array size : ";
     cin>>n;
 
-
     int arr[n];
-    cout<<"Enter a sorted Array: \n";
+    cout<<"Enter Array element: \n";
     for(int i=0;i<n;i++){
-        cin>> arr[i];
+        cin>>arr[i];
     }
 
-    cout<<"Enter your terget value: ";
-    cin>>terget;
+    cout<<"Enter Target Value: ";
+    cin>>target;
 
-    int result = bin_sear(arr,n,terget);
+    int result= tern_sear(arr,n,target);
 
-    if(result != -1)
-        cout<<terget<<" is found at index: " << result;
-
-    else
-        cout<<"Element is not found.";
-        return 0;
-
-
+    if(result != -1){
+        cout<<"Target "<<target<<" found at index : "<<result;
+    }
+    else{
+        cout<<"Not Found";
+    }
 }
