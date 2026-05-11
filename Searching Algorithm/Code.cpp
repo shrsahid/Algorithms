@@ -29,7 +29,7 @@ int main() {
     int result = lin_sear(arr, n, target);
 
     if (result != -1)
-        cout << "Element found at index: " << result;
+        cout << "Element found at index no: " << result;
     else
         cout << "Element not found";
 
