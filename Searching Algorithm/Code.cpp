@@ -1,30 +1,34 @@
 #include<iostream>
-#include<cmath>
 using namespace std;
 
-int jum_sear(int arr[],int n,int target){
-    int step= sqrt(n);
-    int prev=0;
+int inter_sear(int arr[],int n, int target){
+    int low= 0;
+    int high = n-1;
 
-    while(arr[min(step,n)-1]<target){
-          prev=step;
-          step += sqrt(n);
-
-          if(prev>=n){
-            return -1;
-          }
-    }
-    while(arr[prev]<target){
-        prev++;
-
-        if (prev == min(step,n)){
-            return -1;
+    while(low<= high && arr[low]<=target && arr[high]>=target){
+        if(arr[low]==arr[high]){
+            if(arr[low]==target){
+                return low;
+            }
+        return -1;
         }
-    }
-    if(arr[prev]==target){
-            return prev;
+        int pos= low +
+               ((target-arr[low])*(high - low)) /
+               (arr[high]- arr[low]);
+
+        if (arr[pos]==target){
+            return pos;
         }
+        else if(arr[pos]<target){
+            low= pos +1;
+        }
+        else{
+            high=pos-1;
+        }
+
+    }
     return -1;
+
 }
 
 int main(){
@@ -42,7 +46,7 @@ int main(){
     cout<<"Enter the target Value: ";
     cin>> target;
 
-    int result= jum_sear(arr,n,target);
+    int result= inter_sear(arr,n,target);
 
     if(result != -1){
         cout<<target<<" is found at index "<<result;
