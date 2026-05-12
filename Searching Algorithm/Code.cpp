@@ -2,7 +2,7 @@
 #include<cmath>
 using namespace std;
 
-int jump_sear(int arr[],int n,int target){
+int jum_sear(int arr[],int n,int target){
     int step= sqrt(n);
     int prev=0;
 
@@ -42,7 +42,7 @@ int main(){
     cout<<"Enter the target Value: ";
     cin>> target;
 
-    int result= jump_sear(arr,n,target);
+    int result= jum_sear(arr,n,target);
 
     if(result != -1){
         cout<<target<<" is found at index "<<result;
