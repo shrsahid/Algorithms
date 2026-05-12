@@ -1,55 +1,53 @@
 #include<iostream>
+#include<cmath>
 using namespace std;
 
-tern_sear(int arr[],int n, int target){
-    int left= 0;
-    int right= n-1;
-    while(left<=right){
-        int mid1= left+ (right-left)/3;
-        int mid2= right - (right -left )/3;
+int jump_sear(int arr[],int n,int target){
+    int step= sqrt(n);
+    int prev=0;
 
-        if(arr[mid1]==target){
-            return mid1;
-        }
-        if(arr[mid2]==target){
-            return mid2;
-        }
-        else if(arr[mid1]>target){
-            right= mid1 - 1;
-        }
-        else if(arr[mid2]<target){
-            left = mid2 + 1;
-        }
-        else{
-           left = mid1+1;
-           right = mid2-1;
+    while(arr[min(step,n)-1]<target){
+          prev=step;
+          step += sqrt(n);
+
+          if(prev>=n){
+            return -1;
+          }
+    }
+    while(arr[prev]<target){
+        prev++;
+
+        if (prev == min(step,n)){
+            return -1;
         }
     }
+    if(arr[prev]==target){
+            return prev;
+        }
     return -1;
 }
 
-
 int main(){
-    int n, target;
+    int n,target;
 
-    cout<<"Enter array size : ";
+    cout<<"Enter your  array size: ";
     cin>>n;
 
     int arr[n];
-    cout<<"Enter Array element: \n";
+    cout<<"Enter the array value: \n";
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }
 
-    cout<<"Enter Target Value: ";
-    cin>>target;
+    cout<<"Enter the target Value: ";
+    cin>> target;
 
-    int result= tern_sear(arr,n,target);
+    int result= jump_sear(arr,n,target);
 
     if(result != -1){
-        cout<<"Target "<<target<<" found at index : "<<result;
+        cout<<target<<" is found at index "<<result;
     }
     else{
-        cout<<"Not Found";
+        cout<<"Not Found.";
     }
 }
