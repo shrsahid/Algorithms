@@ -1,57 +1,49 @@
 #include<iostream>
 using namespace std;
 
-int inter_sear(int arr[],int n, int target){
-    int low= 0;
-    int high = n-1;
+int bin_sear(int arr[],int left,int right,int target){
+    while(left<=right ){
+        int mid=left+ (right-left)/2;
 
-    while(low<= high && arr[low]<=target && arr[high]>=target){
-        if(arr[low]==arr[high]){
-            if(arr[low]==target){
-                return low;
-            }
-        return -1;
+        if(arr[mid]==target){
+            return mid;
         }
-        int pos= low +
-               ((target-arr[low])*(high - low)) /
-               (arr[high]- arr[low]);
-
-        if (arr[pos]==target){
-            return pos;
-        }
-        else if(arr[pos]<target){
-            low= pos +1;
+        if(arr[mid]<target){
+            left=mid+1;
         }
         else{
-            high=pos-1;
+            right=mid-1;
         }
-
     }
     return -1;
-
 }
-
-int main(){
-    int n,target;
-
-    cout<<"Enter your  array size: ";
-    cin>>n;
-
-    int arr[n];
-    cout<<"Enter the array value: \n";
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
+int exp_sear(int arr[],int n,int target){
+    if(arr[0]==target){
+        return 0;
     }
 
-    cout<<"Enter the target Value: ";
-    cin>> target;
+    int i=1;
+    while(i<n && arr[i]<=target){
+        i=i*2;
 
-    int result= inter_sear(arr,n,target);
+    }
+    return bin_sear(arr,i/2,min(i,n-1), target);
+}
+int main(){
+    int arr[]={1,2,2,3,3,5};
+    int n =sizeof(arr)/sizeof(arr[0]);
+
+    int target;
+    cout<<"Enter your target value: ";
+    cin>>target;
+
+    int result= exp_sear(arr,n,target);
 
     if(result != -1){
-        cout<<target<<" is found at index "<<result;
+        cout<<target<< "Is in index: "<<result;
     }
     else{
-        cout<<"Not Found.";
+        cout<<"Not Found";
     }
+    return 0;
 }
