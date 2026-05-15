@@ -1,49 +1,61 @@
 #include<iostream>
 using namespace std;
 
-int bin_sear(int arr[],int left,int right,int target){
-    while(left<=right ){
-        int mid=left+ (right-left)/2;
+int fib_sear(int arr[], int n ,int target){
+    int fibM2=0;
+    int fibM1=1;
+    int fibM = fibM2+fibM1;
 
-        if(arr[mid]==target){
-            return mid;
+    while(fibM < n){
+        fibM2 = fibM1;
+        fibM1 = fibM;
+        fibM = fibM2 + fibM1;
+    }
+
+    int offset = 1;
+
+    while(fibM > 1){
+        int i = min(offset + fibM2,n-1);
+
+        if (arr[i] < target){
+            fibM = fibM1;
+            fibM1 = fibM2;
+            fibM2 = fibM - fibM1;
+
+            offset = i;
+
         }
-        if(arr[mid]<target){
-            left=mid+1;
+        else if(arr[i] > target){
+            fibM = fibM2;
+            fibM1 = fibM1 - fibM2;
+            fibM2 = fibM - fibM1;
         }
         else{
-            right=mid-1;
+            return i ;
         }
+    }
+    if(fibM1 && arr[offset+1] == target){
+        return offset+1;
     }
     return -1;
 }
-int exp_sear(int arr[],int n,int target){
-    if(arr[0]==target){
-        return 0;
-    }
 
-    int i=1;
-    while(i<n && arr[i]<=target){
-        i=i*2;
-
-    }
-    return bin_sear(arr,i/2,min(i,n-1), target);
-}
-int main(){
-    int arr[]={1,2,2,3,3,5};
-    int n =sizeof(arr)/sizeof(arr[0]);
+int main()
+{
+    int arr[] = {10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
     int target;
-    cout<<"Enter your target value: ";
-    cin>>target;
 
-    int result= exp_sear(arr,n,target);
+    cout << "Enter element to search: ";
+    cin >> target;
 
-    if(result != -1){
-        cout<<target<< "Is in index: "<<result;
-    }
-    else{
-        cout<<"Not Found";
-    }
+    int result = fib_sear(arr, n, target);
+
+    if (result != -1)
+        cout << "Element found at index: " << result << endl;
+    else
+        cout << "Element not found." << endl;
+
     return 0;
 }
